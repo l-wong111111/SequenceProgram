@@ -18,6 +18,10 @@ public class Tick {
         return multiplier;
     }
 
+    public int getTick() {
+        return tick;
+    }
+
     public ArrayList<Sequence> getSequences() {
         return sequences;
     }
