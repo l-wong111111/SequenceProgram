@@ -1,15 +1,23 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Runner {
     public static void main(String[] args) throws InterruptedException {
+        Scanner scan = new Scanner(System.in);
         boolean storeAllTicks = true;
+        ArrayList<Integer> seqPositions = new ArrayList<>();
         ArrayList<Tick> ticks = new ArrayList<>();
         ArrayList<Sequence> sequences = new ArrayList<>();
 
-        sequences.add(new Sequence(6, 6, 10));
-        sequences.add(new Sequence(16, 16, 50));
-        sequences.add(new Sequence(51, 21, 250));
-        sequences.add(new Sequence(126, 48, 5));
+        for (int i = 0; i < 4; i++) {
+            System.out.print("Enter: ");
+            seqPositions.add(scan.nextInt() + 1);
+        }
+
+        sequences.add(new Sequence(6, seqPositions.get(0), 10));
+        sequences.add(new Sequence(16, seqPositions.get(1), 50));
+        sequences.add(new Sequence(51, seqPositions.get(2), 250));
+        sequences.add(new Sequence(126, seqPositions.get(3), 5));
 
         int fullPeriod = 1;
         for (int i = 0; i < sequences.size(); i++) {
@@ -21,20 +29,24 @@ public class Runner {
                 ArrayList<Sequence> sequencesAt1 = new ArrayList<>();
                 for (int i = 0; i < sequences.size(); i++) {
                     if (sequences.get(i).decrement() == 1) sequencesAt1.add(sequences.get(i));
-                    System.out.print(sequences.get(i).getSeqPosition() - 1 + "  ");
                 }
                 ticks.add(new Tick(sequencesAt1, timesDecremented));
-                System.out.println();
-
             }
         }
 //        for (int i = 0; i < ticks.size(); i++) {
 //            System.out.println(ticks.get(i).getMultiplier());
 //        }
+        printMultiplierTick(100000, ticks, 10);
+    }
+
+    private static void printMultiplierTick (int multiplier, ArrayList<Tick> ticks, int printAmount){
+        int count = 0;
         for (Tick tick: ticks) {
-            if (tick.getMultiplier() >= 50000) {
+            if (tick.getMultiplier() >= 100000) {
                 System.out.println("Multi: " + tick.getMultiplier() + " Tick: " + tick.getTick());
+                count++;
             }
+            if (count == printAmount) break;
         }
     }
 }
